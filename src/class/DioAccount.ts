@@ -4,7 +4,7 @@
 // [X] Apenas contas com o status true e saldo (balance) maior que o valor solicitado podem fazer saques
 
 export abstract class DioAccount {
-  private name: string = "";
+  private readonly name: string = "";
   private readonly accountNumber: number = 0;
   private balance: number = 0;
   private status: boolean = true;
@@ -12,20 +12,18 @@ export abstract class DioAccount {
     this.name = name;
     this.accountNumber = accountNumber;
   }
-  private setBalance = (valueDeposit: number) => {
-    this.balance = valueDeposit;
-  };
-
-  setName = (name: string) => (this.name = name);
+  private setBalance(valueDeposit: number) {
+    this.balance += valueDeposit;
+  }
 
   getName = () => this.name;
 
-  deposit = (valueDeposit: number) => {
+  deposit(valueDeposit: number) {
     //validation status account
     this.validateStatus();
     // add deposit in balance
     this.setBalance(valueDeposit);
-  };
+  }
 
   withdraw = (valueWithdraw: number) => {
     //validation status account
