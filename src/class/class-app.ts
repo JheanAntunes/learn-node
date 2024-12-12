@@ -1,7 +1,7 @@
 import { CompanyAccount } from "./CompanyAccount";
 import { PeopleAccount } from "./PeopleAccount";
 
-const companyAccount = new CompanyAccount("jheanEmprestimo", 1);
+const companyAccount = new CompanyAccount("Dio", 1);
 
 console.log(companyAccount);
 
