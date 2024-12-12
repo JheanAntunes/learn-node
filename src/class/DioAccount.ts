@@ -1,3 +1,8 @@
+// [X] Implementar os métodos de depósito (deposit) e saque (withdraw) na classe DioAccount
+
+// [X] Os valores dos saldos devem ser alterados, de acordo com o valor informado para depósito
+// [X] Apenas contas com o status true e saldo (balance) maior que o valor solicitado podem fazer saques
+
 export abstract class DioAccount {
   private name: string = "";
   private readonly accountNumber: number = 0;
@@ -7,23 +12,49 @@ export abstract class DioAccount {
     this.name = name;
     this.accountNumber = accountNumber;
   }
+  private setBalance = (valueDeposit: number) => {
+    this.balance = valueDeposit;
+  };
 
   setName = (name: string) => (this.name = name);
 
   getName = () => this.name;
 
-  deposit = () => {
-    if (this.validateStatus()) {
-      console.log("Depositado");
+  deposit = (valueDeposit: number) => {
+    //validation status account
+    this.validateStatus();
+    // add deposit in balance
+    this.setBalance(valueDeposit);
+  };
+
+  withdraw = (valueWithdraw: number) => {
+    //validation status account
+    if (!this.validateStatus()) {
+      return console.log(
+        "Querido Cliente, a sua conta está inativa. Por favor entre em contato para ativa-la novamente."
+      );
     }
+    //validation balance
+    if (!this.validateWithdraw(valueWithdraw)) {
+      return console.log(
+        "Querido Cliente, O seu saldo é menor o que você quer sacar ",
+        this.getBalance(),
+        " , temos opções de emprestimos. "
+      );
+    }
+    //att balance
+    this.setBalance(valueWithdraw - this.getBalance());
   };
 
-  withdraw = () => {
-    console.log("Sacou ");
+  getBalance = () => this.balance;
+
+  private validateWithdraw = (valueWithdraw: number) => {
+    //validation withdraw
+    if (valueWithdraw >= this.getBalance()) {
+      return true;
+    }
+    return false;
   };
-
-  getBalance = () => console.log("balance: ", this.balance);
-
   private validateStatus = () => {
     if (!this.status) throw new Error();
     return this.status;
